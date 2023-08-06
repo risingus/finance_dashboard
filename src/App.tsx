@@ -1,22 +1,21 @@
-import { currencyApi } from "./services/apis"
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { CardCurrency } from './components/CardCurrency'
+import { ModalCreateCurrency } from './components/ModalCreateCurrency'
+
+const queryClient = new QueryClient()
 
 function App() {
-  async function test() {
-    try {
-      await currencyApi.get('/latest?amount=1&from=USD&to=BRL')
-
-    } catch (error) {
-      console.dir(error)
-    }
-  }
 
   return (
+    <QueryClientProvider client={queryClient}>
     <div>
-      <button onClick={test}>
-        click
-      </button>
-    <h3>here</h3>
+        <CardCurrency from='USD' to='BRL' />
+        <ModalCreateCurrency />
     </div>
+    </QueryClientProvider>
   )
 }
 
