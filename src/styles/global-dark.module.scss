@@ -1,0 +1,22 @@
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.body {
+  --background: #2B2D42;
+  --primary: #D90429;
+  --primary-light: #EF233C;
+  --text-primary: #EDF2F4;
+  --text-secondary: #8D99AE;
+  
+  background-color: var(--background);
+  box-sizing: border-box;
+  -webkit-font-smoothing: 'antialieased';
+  font-smooth: always;
+  height: 100%;
+  width: 100%;
+
+  color: var(--text-primary);
+}
