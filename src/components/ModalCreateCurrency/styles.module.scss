@@ -1,0 +1,56 @@
+
+
+.backdrop {
+  @keyframes overlayShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  background-color: rgba($color: #000000, $alpha: .65);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.content {
+  @keyframes contentShow {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  background-color: var(--background);
+
+  border-radius: 6px;
+  padding: 2rem;
+
+  color: var(--text-primary);
+
+
+  margin: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 30rem;
+  height: 20rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { format, sub } from 'date-fns'
 import brLocale from 'date-fns/locale/pt-BR';
 import { currencyApi } from '../../services/apis'
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast/headless';
 
 interface CardCurrencyProps {
   from: string
@@ -78,7 +80,10 @@ export const CardCurrency = ({ from = '', to = '' }: CardCurrencyProps) => {
     queryFn: async () => await fetchCardData({ from, to })
   })
 
-  if (error) return 'sorry...'
+  useEffect(() => {
+    if (!error) return;
+    toast.error(`Failed to load exchanges from ${from} to ${to}`)
+  }, [error, from, to])
 
   return (
     <div>

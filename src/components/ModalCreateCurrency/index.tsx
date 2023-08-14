@@ -1,43 +1,79 @@
+import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-// import styles from './styles.module.scss'
-import './styles.scss'
+import styles from './styles.module.scss'
+import { Cross1Icon } from '@radix-ui/react-icons'
+import { useCurrencies } from '../../hooks/useCurrencies';
 
-export const ModalCreateCurrency = () => (
-  <Dialog.Root>
+
+
+export const ModalCreateCurrency = () => {
+  const currencies = useCurrencies();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog.Root open={open} onOpenChange={setOpen}>
     <Dialog.Trigger asChild>
       <button>Edit profile</button>
     </Dialog.Trigger>
     <Dialog.Portal>
-      <Dialog.Overlay className="DialogOverlay" />
-      <Dialog.Content className="DialogContent">
-        <Dialog.Title className="DialogTitle">Edit profile</Dialog.Title>
+        <Dialog.Overlay className={styles.backdrop} />
+        <Dialog.Content className={styles.content}>
+          <Dialog.Title className={styles.header}>
+            Add currency exchange
+            <Dialog.Close asChild>
+              <button aria-label="Close">
+                <Cross1Icon />
+              </button>
+            </Dialog.Close>
+          </Dialog.Title>
         <Dialog.Description className="DialogDescription">
-          Make changes to your profile here. Click save when you're done.
+            Choose currencies to show exchange
         </Dialog.Description>
         <fieldset className="Fieldset">
-          <label className="Label" htmlFor="name">
-            Name
-          </label>
-          <input className="Input" id="name" defaultValue="Pedro Duarte" />
+            <label>
+              From
+              <select name="selectFrom">
+                {
+                  Array.isArray(currencies)
+                  && currencies.length > 0
+                  && currencies.map((currency) => {
+                    if (!currency) return null;
+                    if (!currency?.id) return null
+                    if (!currency?.description) return null
+
+                    return <option value={currency.id}>{currency.id} - {currency.description}</option>
+                  })
+                }
+              </select>
+            </label>
         </fieldset>
         <fieldset className="Fieldset">
-          <label className="Label" htmlFor="username">
-            Username
-          </label>
-          <input className="Input" id="username" defaultValue="@peduarte" />
+            <label>
+              To
+              <select name="selectTo">
+                {
+                  Array.isArray(currencies)
+                  && currencies.length > 0
+                  && currencies.map((currency) => {
+                    if (!currency) return null;
+                    if (!currency?.id) return null
+                    if (!currency?.description) return null
+
+                    return <option value={currency.id}>{currency.id} - {currency.description}</option>
+                  })
+                }
+              </select>
+            </label>
         </fieldset>
         <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
           <Dialog.Close asChild>
-            <button className="Button green">Save changes</button>
+              <button>Save changes</button>
           </Dialog.Close>
         </div>
-        <Dialog.Close asChild>
-          <button className="IconButton" aria-label="Close">
-            here
-          </button>
-        </Dialog.Close>
+
       </Dialog.Content>
     </Dialog.Portal>
   </Dialog.Root>
 );
 
+}
