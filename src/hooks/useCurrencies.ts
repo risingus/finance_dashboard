@@ -13,16 +13,18 @@ const fetchCurrencies = async () => {
     const formatedCurrenciesList = Array.isArray(currenciesList)
       && currenciesList.length > 0
       ? currenciesList.map(([key, value]) => {
-        if (typeof key !== 'string') return null;
-        if (typeof value !== 'string') return null;
-        if (key.trim().length === 0) return null;
-        if (value.trim().length === 0) return null;
+        if (!key) return {}
+        if (!value) return {};
+        if (typeof key !== 'string') return {};
+        if (typeof value !== 'string') return {};
+        if (key.trim().length === 0) return {};
+        if (value.trim().length === 0) return {};
 
         return {
           id: key,
           description: value
         }
-      }).filter((value) => value)
+      }).filter((item) => typeof item?.id === 'string' && typeof item?.description === 'string')
       : []
 
     return formatedCurrenciesList
