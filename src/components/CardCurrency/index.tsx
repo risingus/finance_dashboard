@@ -87,9 +87,9 @@ export const CardCurrency = ({ from = '', to = '' }: CardCurrencyProps) => {
 
   return (
     <div>
-      from: {from}
-      to: {to}
-      {data?.exchangeRate ?? 0}
+      from: 1 {from}
+      to: {data?.exchangeRate ?? 0} {to}
+
       {
         data?.history
         && Array.isArray(data?.history)
