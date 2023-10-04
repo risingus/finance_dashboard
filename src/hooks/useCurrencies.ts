@@ -25,7 +25,6 @@ const fetchCurrencies = async () => {
         return {
           id: key,
           description: value,
-          label: key
         }
       })
       : []

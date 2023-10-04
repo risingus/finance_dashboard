@@ -1,8 +1,8 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query'
 import { format, sub } from 'date-fns'
 import brLocale from 'date-fns/locale/pt-BR';
 import { currencyApi } from '../../services/apis'
-import { useEffect } from 'react';
 import { toast } from 'react-hot-toast/headless';
 
 interface CardCurrencyProps {
@@ -89,6 +89,7 @@ export const CardCurrency = ({ from = '', to = '' }: CardCurrencyProps) => {
     <div>
       from: 1 {from}
       to: {data?.exchangeRate ?? 0} {to}
+
 
       {
         data?.history

@@ -1,27 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { Select } from 'antd';
-// import styles from './styles.module.scss'
-// import { Cross1Icon } from '@radix-ui/react-icons'
 import { useCurrencies } from '../../hooks/useCurrencies';
-// import { Button, ButtonRound } from '../Buttons';
-// import { Select } from '../Inputs/Select';
+import { useExchanges } from '../../context/exchangeProvider';
+// import styles from './styles.module.scss'
 
 const { Option } = Select;
 
 export const ModalCreateCurrency = () => {
   const currencies = useCurrencies();
+  const { addExchange } = useExchanges();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  // const [list, setList] = useState([])
 
   function addExchangeRate() {
     const selectedCurrency = currencies.find((currency) => currency.id === selected)
-    console.log(selectedCurrency, 'here dude')
+    if (!selectedCurrency) return;
+    addExchange(selectedCurrency)
     setOpen(false)
   }
-
 
   return (
     <>
