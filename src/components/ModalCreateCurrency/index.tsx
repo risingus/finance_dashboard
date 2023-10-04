@@ -8,7 +8,7 @@ import { useCurrencies } from '../../hooks/useCurrencies';
 // import { Button, ButtonRound } from '../Buttons';
 // import { Select } from '../Inputs/Select';
 
-const filterSelectCurrency = (input: string, option?: { id: string, description: string }) => (option?.description || '').toLowerCase().includes(input.toLowerCase())
+const { Option } = Select;
 
 export const ModalCreateCurrency = () => {
   const currencies = useCurrencies();
@@ -16,10 +16,12 @@ export const ModalCreateCurrency = () => {
   const [selected, setSelected] = useState(null);
   // const [list, setList] = useState([])
 
-  // function addExchangeRate(option?: { id: string, description: string }) {
-  //   console.log('here dude')
-  //   setOpen(false)
-  // }
+  function addExchangeRate() {
+    const selectedCurrency = currencies.find((currency) => currency.id === selected)
+    console.log(selectedCurrency, 'here dude')
+    setOpen(false)
+  }
+
 
   return (
     <>
@@ -31,7 +33,7 @@ export const ModalCreateCurrency = () => {
         title='Add Currency'
         centered
         open={open}
-        // onOk={() => addExchangeRate(false)}
+        onOk={addExchangeRate}
         onCancel={() => setOpen(false)}
         okText='add'
       >
@@ -39,31 +41,17 @@ export const ModalCreateCurrency = () => {
 
         <Select
           showSearch
-          placeholder='From'
-          optionFilterProp='children'
-          options={currencies}
-          value={
-            {
-              description: "United States Dollar",
-              id: "USD",
-              label: "United States Dollar"
-            }}
-          filterOption={filterSelectCurrency}
-          disabled
-        />
-
-        <Select
-          showSearch
           placeholder='To'
           optionFilterProp='children'
-          options={currencies}
-          value={selected ?? null}
-          filterOption={filterSelectCurrency}
           onChange={(value) => setSelected(value)}
-        />
-
-
-
+          value={selected}
+        >
+          {
+            currencies.map((currency) => (
+              <Option key={currency.id} value={currency.id}>{currency.description}</Option>
+            ))
+          }
+        </Select>
       </Modal>
     </>
   );
