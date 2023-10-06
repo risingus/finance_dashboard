@@ -13,6 +13,7 @@ interface CurrencyProps {
 interface ExchangeContextProps {
   exchanges: CurrencyProps[]
   addExchange: (currency: CurrencyProps) => void
+  deleteExchange: (currency: CurrencyProps) => void
 }
 
 const ExchangeContext = createContext({} as ExchangeContextProps);
@@ -58,8 +59,26 @@ const ExchangeProvider = ({ children }: ExchangeProviderProps) => {
     })
   }
 
+  const deleteExchange = (currency: CurrencyProps) => {
+    if (!currency) return;
+    if (typeof currency?.id !== 'string') return;
+
+    const storedExchanges = localStorage.getItem(exchangesStorageKey);
+    const localExchanges = storedExchanges ? JSON.parse(storedExchanges) : [];
+
+    const newExchanges = Array.isArray(localExchanges)
+      ? localExchanges.filter((coin: CurrencyProps) => coin.id !== currency.id)
+      : []
+
+    localStorage.setItem(exchangesStorageKey, JSON.stringify(newExchanges));
+    dispatch({
+      type: 'DELETE_EXCHANGE',
+      payload: currency.id
+    })
+  }
+
   return (
-    <ExchangeContext.Provider value={{ ...state, addExchange }}>
+    <ExchangeContext.Provider value={{ ...state, addExchange, deleteExchange }}>
       {children}
     </ExchangeContext.Provider>
   )
