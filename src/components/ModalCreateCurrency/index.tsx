@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import { Select } from 'antd';
 import { useCurrencies } from '../../hooks/useCurrencies';
 import { useExchanges } from '../../context/exchangeProvider';
-// import styles from './styles.module.scss'
+import styles from './styles.module.scss'
 
 const { Option } = Select;
 
@@ -23,7 +23,7 @@ export const ModalCreateCurrency = () => {
   return (
     <>
       <Button type='primary' onClick={(() => setOpen((state) => !state))}>
-        Add
+        Add Currency
       </Button>
 
       <Modal
@@ -34,14 +34,14 @@ export const ModalCreateCurrency = () => {
         onCancel={() => setOpen(false)}
         okText='add'
       >
-        add currency
-
+        <div className={styles.modal_content}>
         <Select
           showSearch
-          placeholder='To'
+          placeholder='Select Currency'
           optionFilterProp='children'
           onChange={(value) => setSelected(value)}
           value={selected}
+          style={{width: '100%'}}
         >
           {
             currencies.map((currency) => (
@@ -49,6 +49,7 @@ export const ModalCreateCurrency = () => {
             ))
           }
         </Select>
+        </div>
       </Modal>
     </>
   );

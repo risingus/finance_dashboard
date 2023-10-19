@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { theme } from 'antd';
 import { useQuery } from '@tanstack/react-query'
 import { format, sub } from 'date-fns'
 import brLocale from 'date-fns/locale/pt-BR';
@@ -30,6 +31,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+const { useToken } = theme;
 
 async function fetchExchangeRatesHistory({ from = '', to = '' }) {
   try {
@@ -65,6 +68,7 @@ async function fetchExchangeRatesHistory({ from = '', to = '' }) {
 }
 
 export const LineChart = ({ from = '', to = '' }: ChartProps) => {
+  const {token} = useToken();
   const { error, data } = useQuery({
     queryKey: ['exchangesHistory', from, to],
     queryFn: async () => await fetchExchangeRatesHistory({ from, to })
@@ -76,8 +80,8 @@ export const LineChart = ({ from = '', to = '' }: ChartProps) => {
       {
         label: 'rate',
         data: data?.map((history) => history.rate),
-        backgroundColor: 'white',
-        borderColor: 'yellow'
+        backgroundColor: '#ffffff',
+        borderColor: token.colorPrimary
 
       }
     ]

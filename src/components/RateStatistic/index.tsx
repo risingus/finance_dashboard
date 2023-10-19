@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
-import { currencyApi } from '../../services/apis';
 import { useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Statistic } from 'antd';
+import { currencyApi } from '../../services/apis';
 import toast from 'react-hot-toast';
 
 
@@ -29,7 +30,7 @@ async function fetchExchangeRates({ from = '', to = '' }) {
   }
 }
 
-export const TableCellValue = ({ from = 'USD', to = '' }) => {
+export const RateStatistic = ({ from = 'USD', to = '' }) => {
   const { error, data } = useQuery({
     queryKey: ['exchanges', from, to],
     queryFn: async () => await fetchExchangeRates({ from, to })
@@ -40,9 +41,6 @@ export const TableCellValue = ({ from = 'USD', to = '' }) => {
     toast.error(`Failed to load exchanges from ${from} to ${to}`)
   }, [error, from, to])
 
-  return (
-    <div>
-      {data?.formatedExchangeRate || ''}
-    </div>
-  )
+  return <Statistic title='Exchange Rate' valueStyle={{ color: 'var(--primary)' }} value={data?.formatedExchangeRate || ''} />
+  
 }
