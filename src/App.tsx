@@ -11,6 +11,7 @@ import './styles/styles-global.scss';
 import { Home } from './pages/Home';
 import { ExchangeProvider } from './context/exchangeProvider';
 
+
 const queryClient = new QueryClient()
 
 function App() {

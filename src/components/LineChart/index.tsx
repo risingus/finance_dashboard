@@ -12,6 +12,7 @@ import {
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
@@ -29,7 +30,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 const { useToken } = theme;
@@ -41,9 +43,10 @@ async function fetchExchangeRatesHistory({ from = '', to = '' }) {
     if (typeof to !== 'string') return [];
     if (to.trim().length === 0) return [];
 
-    const date = format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd');
+    const startDate = format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd');
+    const today = format(new Date(), 'yyyy-MM-dd');
 
-    const { data } = await currencyApi.get(`/${date}..?from=${from}&to=${to}`)
+    const { data } = await currencyApi.get(`/timeseries?start_date=${startDate}&end_date=${today}&base=${from}&currencies=${to}`)
     const history = Object.entries(data.rates);
 
     const ratesHistory = Array.isArray(history)
@@ -71,7 +74,10 @@ export const LineChart = ({ from = '', to = '' }: ChartProps) => {
   const {token} = useToken();
   const { error, data } = useQuery({
     queryKey: ['exchangesHistory', from, to],
-    queryFn: async () => await fetchExchangeRatesHistory({ from, to })
+    queryFn: async () => await fetchExchangeRatesHistory({ from, to }),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60, // ? 1 hora
   })
 
   const chartData = {
@@ -80,9 +86,9 @@ export const LineChart = ({ from = '', to = '' }: ChartProps) => {
       {
         label: 'rate',
         data: data?.map((history) => history.rate),
-        backgroundColor: '#ffffff',
-        borderColor: token.colorPrimary
-
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: 'rgb(53, 162, 235)',
+        fill: true,
       }
     ]
   }
