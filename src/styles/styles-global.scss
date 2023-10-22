@@ -9,9 +9,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #17191E;
-    --background-content: #454649;
-    --primary: #F7B801;
-    --primary-light: #f3d067;
+    --background-content: #141414;
+    --primary: rgba(231, 60, 126, 1);
+    --primary-light: rgba(231, 60, 126, .2);
     --text-primary: #EDF2F4;
     --text-secondary: #8D99AE;
   }
@@ -20,10 +20,10 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background: #EDF2F4;
-    --background-content: #454649;
-    --primary: #F7B801;
-    --primary-light: #f3d067;
+    --background: rgba(237, 242, 244, 1);
+    --background-content: rgba(69, 70, 73, 1);
+    --primary: rgba(231, 60, 126, 1);
+    --primary-light: rgba(231, 60, 126, .2);
     --text-primary: #17191E;
     --text-secondary: #8D99AE;
   }
@@ -32,8 +32,12 @@
 body {
   background-color: var(--background);
   box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-
   color: var(--text-primary);
+
+  #root {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+  }
 }

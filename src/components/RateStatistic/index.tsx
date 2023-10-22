@@ -12,7 +12,7 @@ async function fetchExchangeRates({ from = '', to = '' }) {
     if (typeof to !== 'string') return null;
     if (to.trim().length === 0) return null;
 
-    const { data } = await currencyApi.get(`/latest?amount=1&from=${from}&to=${to}`);
+    const { data } = await currencyApi.get(`/latest?base=${from}&currencies=${to}`);
     const exchangeRate = data?.rates?.[to]
     if (typeof exchangeRate !== 'number') return null;
 
@@ -33,7 +33,10 @@ async function fetchExchangeRates({ from = '', to = '' }) {
 export const RateStatistic = ({ from = 'USD', to = '' }) => {
   const { error, data } = useQuery({
     queryKey: ['exchanges', from, to],
-    queryFn: async () => await fetchExchangeRates({ from, to })
+    queryFn: async () => await fetchExchangeRates({ from, to }),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60, // ? 1 hora
   })
 
   useEffect(() => {

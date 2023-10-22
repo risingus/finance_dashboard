@@ -20,7 +20,6 @@ export const CurrencyCard = ({ id = '', description = '' }) => {
   const { deleteExchange } = useExchanges();
   return (
     <Card 
-      hoverable
       actions={[
         <DeleteFilled onClick={() => deleteExchange({id, description})} style={{fontSize: '1rem'}}/>,
         <EditFilled style={{fontSize: '1rem'}}/>

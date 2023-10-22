@@ -11,6 +11,7 @@ import './styles/styles-global.scss';
 import { Home } from './pages/Home';
 import { ExchangeProvider } from './context/exchangeProvider';
 
+
 const queryClient = new QueryClient()
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
         algorithm: isDarkOs ? darkAlgorithm : defaultAlgorithm,
         token: {
           colorPrimary: theme['--primary'],
-          colorLinkHover: theme['--primary'],
+          colorPrimaryHover:theme['--primary-light'],
+          colorLinkHover: theme['--primary-light'],
         }
       }}
     >
