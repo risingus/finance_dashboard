@@ -86,8 +86,8 @@ export const LineChart = ({ from = '', to = '' }: ChartProps) => {
       {
         label: 'rate',
         data: data?.map((history) => history.rate),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: token.colorPrimaryHover,
+        borderColor: token.colorPrimary,
         fill: true,
       }
     ]

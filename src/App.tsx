@@ -25,7 +25,8 @@ function App() {
         algorithm: isDarkOs ? darkAlgorithm : defaultAlgorithm,
         token: {
           colorPrimary: theme['--primary'],
-          colorLinkHover: theme['--primary'],
+          colorPrimaryHover:theme['--primary-light'],
+          colorLinkHover: theme['--primary-light'],
         }
       }}
     >
